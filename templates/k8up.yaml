@@ -1,0 +1,24 @@
+---
+# this is for backups
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: k8up
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  project: default
+  source:
+    repoURL: 
+    path: .
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: k8up
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - Replace=true
+    automated:
+      prune: true
+      selfHeal: true
